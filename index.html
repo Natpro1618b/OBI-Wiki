@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.B.I. Wiki | Minecraft</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        :root {
+            /* Palette Sombre (Défaut) */
+            --bg: #1a1a1a;
+            --sidebar: #121212;
+            --text: #f1f1f1;
+            --accent: #55ff55;
+            --border: #333;
+            --hover: #252525;
+            --font-size: 16px;
+        }
+
+        body.light-mode {
+            /* Palette Claire */
+            --bg: #ffffff;
+            --sidebar: #f4f4f4;
+            --text: #1a1a1a;
+            --accent: #2e7d32;
+            --border: #ddd;
+            --hover: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            font-size: var(--font-size);
+            overflow: hidden;
+        }
+
+        /* --- BARRE LATÉRALE --- */
+        #nav-side {
+            width: 280px;
+            background-color: var(--sidebar);
+            border-right: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .brand { 
+            padding: 20px; 
+            font-weight: bold; 
+            color: var(--accent); 
+            border-bottom: 1px solid var(--border); 
+            text-align: center;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        #menu { list-style: none; padding: 0; margin: 0; flex-grow: 1; overflow-y: auto; }
+        #menu li { 
+            padding: 15px 25px; 
+            cursor: pointer; 
+            border-bottom: 1px solid var(--border); 
+            transition: 0.2s ease;
+        }
+        #menu li:hover { background-color: var(--hover); padding-left: 35px; color: var(--accent); }
+
+        /* --- ZONE PARAMÈTRES --- */
+        .settings {
+            padding: 20px;
+            border-top: 2px solid var(--border);
+            background: var(--sidebar);
+        }
+
+        .settings label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .btn-theme {
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            transition: opacity 0.2s;
+        }
+        .btn-theme:hover { opacity: 0.8; }
+
+        #font-slider { width: 100%; cursor: pointer; accent-color: var(--accent); }
+
+        /* --- ZONE DE CONTENU --- */
+        #main-view { flex: 1; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; }
+        
+        #search-container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto 30px auto;
+        }
+
+        #page-search {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            background: var(--sidebar);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+        }
+        #page-search:focus { border-color: var(--accent); }
+
+        #render { max-width: 900px; width: 100%; margin: 0 auto; line-height: 1.6; }
+        
+        /* Styles Markdown */
+        #render h1 { color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        #render h2 { border-bottom: 1px solid var(--border); margin-top: 30px; }
+        #render code { background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        #render pre { background: #000; padding: 15px; border-radius: 8px; overflow-x: auto; color: #fff; }
+        #render img { max-width: 100%; border-radius: 4px; border: 1px solid var(--border); }
+        #render blockquote { border-left: 4px solid var(--accent); margin: 0; padding-left: 20px; font-style: italic; color: #888; }
+
+        /* Adaptabilité Mobile */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            #nav-side { width: 100%; height: auto; border-right: none; border-bottom: 2px solid var(--border); }
+            #main-view { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="nav-side">
+    <div class="brand">O.B.I. CENTER</div>
+    <ul id="menu">
+        <li onclick="loadPage('Accueil')">🏠 Accueil</li>
+        <li onclick="loadPage('Articles')">📦 Articles</li>
+        <li onclick="loadPage('Membres')">👥 Membres</li>
+        <li onclick="loadPage('PatchNotes')">🛠️ Patch Notes</li>
+    </ul>
+    
+    <div class="settings">
+        <button class="btn-theme" onclick="toggleTheme()">🌓 Mode Clair / Sombre</button>
+        <label for="font-slider">Taille du texte</label>
+        <input type="range" id="font-slider" min="14" max="26" value="16" oninput="changeFontSize(this.value)">
+    </div>
+</nav>
+
+<main id="main-view">
+    <div id="search-container">
+        <input type="text" id="page-search" placeholder="🔍 Rechercher dans cette page..." onkeyup="filterContent()">
+    </div>
+    <div id="render">Sélectionnez une page dans le menu.</div>
+</main>
+
+<script>
+    // --- 1. GESTION DU THÈME ---
+    function toggleTheme() {
+        const isLight = document.body.classList.toggle('light-mode');
+        localStorage.setItem('obi-theme', isLight ? 'light' : 'dark');
+    }
+
+    // --- 2. GESTION DE LA TAILLE DE POLICE ---
+    function changeFontSize(size) {
+        document.documentElement.style.setProperty('--font-size', size + 'px');
+        localStorage.setItem('obi-font', size);
+    }
+
+    // --- 3. RECHERCHE INTERNE (FILTRE) ---
+    function filterContent() {
+        const query = document.getElementById('page-search').value.toLowerCase();
+        const elements = document.querySelectorAll('#render > p, #render > li, #render > h1, #render > h2, #render > h3, #render > tr, #render > blockquote');
+
+        elements.forEach(el => {
+            const match = el.textContent.toLowerCase().includes(query);
+            el.style.display = match ? "" : "none";
+        });
+    }
+
+    // --- 4. CHARGEMENT DES FICHIERS MARKDOWN ---
+    async function loadPage(fileName) {
+        const renderDiv = document.getElementById('render');
+        const searchInput = document.getElementById('page-search');
+        const target = `wiki/${fileName}.md`;
+
+        try {
+            renderDiv.innerHTML = "<em>Chargement du fichier...</em>";
+            const response = await fetch(target);
+            
+            if (!response.ok) throw new Error("Fichier introuvable");
+
+            const mdContent = await response.text();
+            
+            // Si le fichier est vide
+            if (mdContent.trim() === "") {
+                renderDiv.innerHTML = `<h1>${fileName}</h1><p style='color:orange'>Le fichier <code>${target}</code> est vide.</p>`;
+            } else {
+                renderDiv.innerHTML = marked.parse(mdContent);
+            }
+
+            // Reset recherche et Scroll
+            searchInput.value = "";
+            window.location.hash = fileName;
+            document.getElementById('main-view').scrollTop = 0;
+
+        } catch (err) {
+            renderDiv.innerHTML = `<h1>Erreur de chargement</h1>
+            <p>Impossible d'accéder à : <b>${target}</b></p>
+            <p><small>Note : Utilisez <b>Firefox</b> pour une lecture locale ou un serveur local (Live Server).</small></p>`;
+        }
+    }
+
+    // --- 5. INITIALISATION AU CHARGEMENT ---
+    window.addEventListener('load', () => {
+        // Restaurer le thème
+        if (localStorage.getItem('obi-theme') === 'light') {
+            document.body.classList.add('light-mode');
+        }
+        
+        // Restaurer la taille de police
+        const savedFont = localStorage.getItem('obi-font') || '16';
+        document.getElementById('font-slider').value = savedFont;
+        changeFontSize(savedFont);
+
+        // Charger la page via l'URL (hash) ou l'accueil par défaut
+        const initialPage = window.location.hash.replace('#', '') || 'Accueil';
+        loadPage(initialPage);
+    });
+</script>
+
+</body>
+</html>
