@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O.B.I. Wiki | Mobile Ready</title>
+    <title>O.B.I. Wiki | Officiel</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <style>
         :root {
             --bg: #1a1a1a;
@@ -55,7 +51,6 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         /* --- SIDEBAR --- */
@@ -75,6 +70,7 @@
             color: var(--accent); 
             border-bottom: 1px solid var(--border); 
             text-align: center;
+            font-size: 1.2rem;
         }
 
         #menu { list-style: none; padding: 0; margin: 0; flex-grow: 1; overflow-y: auto; }
@@ -82,7 +78,7 @@
         #menu li:hover { background-color: var(--hover); color: var(--accent); }
 
         .settings { padding: 20px; border-top: 2px solid var(--border); background: var(--sidebar); }
-        .btn-theme { width: 100%; padding: 12px; cursor: pointer; background: var(--accent); border: none; font-weight: bold; border-radius: 6px; margin-bottom: 15px; }
+        .btn-theme { width: 100%; padding: 12px; cursor: pointer; background: var(--accent); border: none; font-weight: bold; border-radius: 6px; margin-bottom: 15px; color: #000; }
 
         /* --- CONTENU --- */
         #main-view { 
@@ -99,7 +95,6 @@
             max-width: 800px;
             width: 100%;
             margin: 0 auto 30px auto;
-            box-sizing: border-box;
         }
 
         #page-search {
@@ -113,12 +108,12 @@
         }
 
         #render { max-width: 800px; width: 100%; margin: 0 auto; line-height: 1.7; word-wrap: break-word; }
-        #render h1 { color: var(--accent); border-bottom: 2px solid var(--border); }
-        #render blockquote { border-left: 4px solid var(--accent); padding-left: 15px; color: #888; }
-        #render img { max-width: 100%; border-radius: 8px; }
-
-        /* AJOUT : Style pour que la carte soit visible */
-        #map { height: 500px; width: 100%; margin: 20px 0; border-radius: 8px; border: 1px solid var(--border); z-index: 10; }
+        #render h1 { color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        #render blockquote { border-left: 4px solid var(--accent); padding-left: 15px; color: #888; background: rgba(85, 255, 85, 0.05); padding: 10px 20px; }
+        #render img { max-width: 100%; border-radius: 8px; margin: 20px 0; }
+        #render table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        #render th, #render td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+        #render th { background: var(--hover); }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
@@ -128,7 +123,6 @@
                 height: 100vh;
                 z-index: 999;
                 transform: translateX(-100%);
-                box-shadow: 10px 0 20px rgba(0,0,0,0.5);
             }
             #nav-side.active { transform: translateX(0); }
             #main-view { padding: 80px 20px 20px 20px; }
@@ -155,9 +149,9 @@
 
     <main id="main-view">
         <div id="search-container">
-            <input type="text" id="page-search" placeholder="🔍 Rechercher..." onkeyup="filterContent()">
+            <input type="text" id="page-search" placeholder="🔍 Rechercher dans la page..." onkeyup="filterContent()">
         </div>
-        <div id="render">Sélectionnez une page.</div>
+        <div id="render">Chargement...</div>
     </main>
 
 <script>
@@ -185,7 +179,7 @@
 
     function filterContent() {
         const query = document.getElementById('page-search').value.toLowerCase();
-        const elements = document.querySelectorAll('#render > p, #render > li, #render > h1, #render > h2, #render > h3, #render > blockquote');
+        const elements = document.querySelectorAll('#render > p, #render > li, #render > h1, #render > h2, #render > h3, #render > tr');
         elements.forEach(el => {
             el.style.display = el.textContent.toLowerCase().includes(query) ? "" : "none";
         });
@@ -194,33 +188,38 @@
     async function loadPage(fileName) {
         const renderDiv = document.getElementById('render');
         try {
+            // Tentative de chargement du fichier .md dans le dossier /wiki/
             const response = await fetch(`wiki/${fileName}.md`);
             if (!response.ok) throw new Error();
             const md = await response.text();
-            renderDiv.innerHTML = marked.parse(md || "# Vide");
+            
+            // Conversion Markdown vers HTML
+            renderDiv.innerHTML = marked.parse(md || "# Page vide");
 
-            // --- AJOUT : Déclencheur pour la carte ---
-            const scripts = renderDiv.querySelectorAll("script");
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement("script");
-                newScript.text = oldScript.text;
-                document.body.appendChild(newScript).parentNode.removeChild(newScript);
-            });
-
+            // Fermeture auto du menu sur mobile
             if (window.innerWidth <= 768) document.getElementById('nav-side').classList.remove('active');
+            
+            // Mise à jour de l'URL (le hash)
             window.location.hash = fileName;
             document.getElementById('main-view').scrollTop = 0;
         } catch (err) {
-            renderDiv.innerHTML = "<h1>Erreur</h1><p>Fichier introuvable.</p>";
+            renderDiv.innerHTML = `<h1>Erreur 404</h1><p>Impossible de charger <b>wiki/${fileName}.md</b>. Vérifiez le nom du fichier.</p>`;
         }
     }
 
+    // Au chargement de la page
     window.addEventListener('load', () => {
+        // Appliquer le thème sauvegardé
         if (localStorage.getItem('obi-theme') === 'light') document.body.classList.add('light-mode');
+        
+        // Appliquer la taille de police sauvegardée
         const savedFont = localStorage.getItem('obi-font') || '16';
         document.getElementById('font-slider').value = savedFont;
         changeFontSize(savedFont);
-        loadPage(window.location.hash.replace('#', '') || 'Accueil');
+        
+        // Charger la page par défaut (Accueil ou celle du hash)
+        const initialPage = window.location.hash.replace('#', '') || 'Accueil';
+        loadPage(initialPage);
     });
 </script>
 </body>
