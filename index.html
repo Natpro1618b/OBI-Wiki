@@ -37,7 +37,6 @@
             overflow: hidden;
         }
 
-        /* --- MENU MOBILE --- */
         #mobile-toggle {
             display: none;
             position: fixed;
@@ -53,7 +52,6 @@
             cursor: pointer;
         }
 
-        /* --- SIDEBAR --- */
         #nav-side {
             width: 280px;
             background-color: var(--sidebar);
@@ -80,7 +78,6 @@
         .settings { padding: 20px; border-top: 2px solid var(--border); background: var(--sidebar); }
         .btn-theme { width: 100%; padding: 12px; cursor: pointer; background: var(--accent); border: none; font-weight: bold; border-radius: 6px; margin-bottom: 15px; color: #000; }
 
-        /* --- CONTENU --- */
         #main-view { 
             flex: 1; 
             padding: 40px; 
@@ -115,7 +112,6 @@
         #render th, #render td { border: 1px solid var(--border); padding: 12px; text-align: left; }
         #render th { background: var(--hover); }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             #mobile-toggle { display: block; }
             #nav-side {
@@ -188,36 +184,23 @@
     async function loadPage(fileName) {
         const renderDiv = document.getElementById('render');
         try {
-            // Tentative de chargement du fichier .md dans le dossier /wiki/
             const response = await fetch(`wiki/${fileName}.md`);
             if (!response.ok) throw new Error();
             const md = await response.text();
-            
-            // Conversion Markdown vers HTML
             renderDiv.innerHTML = marked.parse(md || "# Page vide");
-
-            // Fermeture auto du menu sur mobile
             if (window.innerWidth <= 768) document.getElementById('nav-side').classList.remove('active');
-            
-            // Mise à jour de l'URL (le hash)
             window.location.hash = fileName;
             document.getElementById('main-view').scrollTop = 0;
         } catch (err) {
-            renderDiv.innerHTML = `<h1>Erreur 404</h1><p>Impossible de charger <b>wiki/${fileName}.md</b>. Vérifiez le nom du fichier.</p>`;
+            renderDiv.innerHTML = `<h1>Erreur 404</h1><p>Fichier <b>wiki/${fileName}.md</b> introuvable.</p>`;
         }
     }
 
-    // Au chargement de la page
     window.addEventListener('load', () => {
-        // Appliquer le thème sauvegardé
         if (localStorage.getItem('obi-theme') === 'light') document.body.classList.add('light-mode');
-        
-        // Appliquer la taille de police sauvegardée
         const savedFont = localStorage.getItem('obi-font') || '16';
         document.getElementById('font-slider').value = savedFont;
         changeFontSize(savedFont);
-        
-        // Charger la page par défaut (Accueil ou celle du hash)
         const initialPage = window.location.hash.replace('#', '') || 'Accueil';
         loadPage(initialPage);
     });
