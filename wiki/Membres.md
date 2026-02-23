@@ -1,54 +1,37 @@
 # 👥 O.B.I. -- Membres
-
-
 Voici la liste des nations membres actuelles :
 
 * **Prismara**
 * **A Altaiea**
- 
 
+---
 
-
-
-
-# 🗺️ O.B.I. -- Carte Interactive des Territoires
+### 🗺️ Carte des Territoires
 <div id="map"></div>
 
 <script>
-    // Initialisation de la carte (coordonnées Minecraft centrées sur 0,0)
-    var map = L.map('map', {
-        crs: L.CRS.Simple,
-        minZoom: -3
+    // 1. Initialisation de la carte (système de coordonnées Minecraft)
+    var map = L.map('map', { 
+        crs: L.CRS.Simple, 
+        minZoom: -3 
     });
 
-    var bounds = [[-1000, -1000], [1000, 1000]]; // Taille de la zone affichée
-    map.fitBounds(bounds);
-
-    // Fonction pour ajouter un territoire (Chunks ou Zones)
-    function addTerritory(x1, z1, x2, z2, color, name) {
-        var rect = L.rectangle([[z1, x1], [z2, x2]], {
-            color: color,
-            weight: 2,
-            fillOpacity: 0.5
-        }).addTo(map);
-        rect.bindPopup("<b>Territoire :</b> " + name);
+    // 2. Définition des zones (X, Z, Largeur, Hauteur, Couleur, Nom)
+    function addZone(x, z, w, h, color, name) {
+        // Inversion Z pour correspondre au rendu 2D classique
+        var bounds = [[-z - h, x], [-z, x + w]]; 
+        L.rectangle(bounds, {color: color, weight: 2, fillOpacity: 0.5})
+         .addTo(map)
+         .bindPopup("<b>" + name + "</b>");
     }
 
-    // --- CONFIGURATION DES ZONES ---
-    // addTerritory(X_début, Z_début, X_fin, Z_fin, "couleur", "Nom")
+    // 3. Ajoute tes pays ici (Coordonnées Minecraft)
+    // Exemple : Prismara commence à X:0, Z:0 et fait 160x160 blocs
+    addZone(0, 0, 160, 160, "#55ff55", "Prismara");
     
-    addTerritory(0, 0, 160, 160, "#55ff55", "Prismara - Capitale");
-    addTerritory(200, -100, 400, 100, "#5555ff", "A Altaiea - Port");
-    addTerritory(-300, -300, -100, -100, "#ff5555", "Zone de Conflit");
+    // Exemple : A Altaiea commence à X:200, Z:-100
+    addZone(200, -100, 150, 150, "#5555ff", "A Altaiea");
 
-    // Grille de repère (Optionnel)
-    L.gridLayer({
-        tileSize: 128,
-        attribution: 'Grille O.B.I.'
-    }).addTo(map);
+    // 4. Centrer la vue
+    map.setView([-50, 100], -1);
 </script>
-
-### 📋 Liste des Nations
-* **Prismara** (Vert)
-* **A Altaiea** (Bleu)
-
