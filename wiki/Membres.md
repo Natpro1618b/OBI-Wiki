@@ -14,7 +14,7 @@ Retrouvez ici les détails, l'histoire et les monuments de chaque nation de l'al
 * **Monument emblématique :** Mont-Royal
 
 #### 📸 Aperçu de la nation
-![Mont-Royal](https://raw.githubusercontent.com/Natpro1618b/OBI-Wiki/main/images/prismara.png)
+![Mont-Royal](https://natpro1618b.github.io/OBI-Wiki/images/prismara.png)
 
 ---
 
