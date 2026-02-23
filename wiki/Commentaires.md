@@ -6,3 +6,4 @@ Cette page est dédiée aux retours et discussions des membres.
 
 ### 📌 Derniers avis
 * **Kirito** : Le site est super cool 👍!
+* **Griops** : Le site est trop cool pour ma fondation, continues comme ça !
