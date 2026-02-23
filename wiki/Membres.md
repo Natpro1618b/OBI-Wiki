@@ -33,8 +33,10 @@ Voici la liste des nations membres actuelles :
     }).addTo(map).bindPopup("<b>" + name + "</b>");
 }s
 
-            addZone(0, 0, 160, 160, "#55ff55", "Prismara");
-            addZone(200, -100, 150, 150, "#5555ff", "A Altaiea");
+            // Zone A
+addZone(0, 0, 160, 160, "#55ff55", "Zone test 1");
+// Zone B (collée à droite de la Zone A)
+addZone(160, 0, 160, 160, "#5555ff", "Zone test 2");
 
             map.setView([-50, 100], -1);
             
