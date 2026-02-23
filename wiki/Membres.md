@@ -20,11 +20,18 @@ Voici la liste des nations membres actuelles :
 
             // Dessiner les zones
             function addZone(x, z, w, h, color, name) {
-                var bounds = [[-z - h, x], [-z, x + w]]; 
-                L.rectangle(bounds, {color: color, weight: 2, fillOpacity: 0.5})
-                 .addTo(map)
-                 .bindPopup("<b>" + name + "</b>");
-            }
+    // Dans Minecraft : X = horizontal, Z = vertical (Sud positif)
+    // Leaflet Simple CRS : [Y, X] -> [-Z, X]
+    // On définit le rectangle par le coin Nord-Ouest et Sud-Est
+    var northWest = [-z, x]; 
+    var southEast = [-(z + h), x + w]; 
+    
+    L.rectangle([northWest, southEast], {
+        color: color, 
+        weight: 2, 
+        fillOpacity: 0.5
+    }).addTo(map).bindPopup("<b>" + name + "</b>");
+}s
 
             addZone(0, 0, 160, 160, "#55ff55", "Prismara");
             addZone(200, -100, 150, 150, "#5555ff", "A Altaiea");
