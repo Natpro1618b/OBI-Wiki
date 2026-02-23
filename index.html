@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O.B.I. Wiki | Mobile Ready</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
         :root {
             --bg: #1a1a1a;
@@ -113,6 +117,9 @@
         #render blockquote { border-left: 4px solid var(--accent); padding-left: 15px; color: #888; }
         #render img { max-width: 100%; border-radius: 8px; }
 
+        /* AJOUT : Style pour que la carte soit visible */
+        #map { height: 500px; width: 100%; margin: 20px 0; border-radius: 8px; border: 1px solid var(--border); z-index: 10; }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             #mobile-toggle { display: block; }
@@ -191,6 +198,15 @@
             if (!response.ok) throw new Error();
             const md = await response.text();
             renderDiv.innerHTML = marked.parse(md || "# Vide");
+
+            // --- AJOUT : Déclencheur pour la carte ---
+            const scripts = renderDiv.querySelectorAll("script");
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement("script");
+                newScript.text = oldScript.text;
+                document.body.appendChild(newScript).parentNode.removeChild(newScript);
+            });
+
             if (window.innerWidth <= 768) document.getElementById('nav-side').classList.remove('active');
             window.location.hash = fileName;
             document.getElementById('main-view').scrollTop = 0;
