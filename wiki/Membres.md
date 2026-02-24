@@ -21,14 +21,15 @@ Retrouvez ici les détails, l'histoire et les monuments de chaque nation de l'al
 ## A Altaiea
 
 
-**Description :** Aucune
+**Description :** Dictature très autoritaire.
 
-* **Capitale :** ??
-* **Chef d'État :** ??
-* **Monument emblématique :** ??
+* **Capitale :** __En attente d'infos__
+* **Chef d'État :** Vince_Moderne0
+* **Monument emblématique :** __En attente d'infos__
 
 #### 📸 Aperçu de la nation
-![Description de l'image](../images/image.png)
+![Description de l'image](../images/.png)
 
 ---
+
 _Pour ajouter votre nation ou modifier une description, contactez l'administrateur._
