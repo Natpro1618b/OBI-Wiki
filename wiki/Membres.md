@@ -23,9 +23,9 @@ Retrouvez ici les détails, l'histoire et les monuments de chaque nation de l'al
 
 **Description :** Dictature très autoritaire.
 
-* **Capitale :** __En attente d'infos__
+* **Capitale :** _En attente d'infos_
 * **Chef d'État :** Vince_Moderne0
-* **Monument emblématique :** __En attente d'infos__
+* **Monument emblématique :** _En attente d'infos_
 
 #### 📸 Aperçu de la nation
 ![Description de l'image](../images/.png)
@@ -33,3 +33,4 @@ Retrouvez ici les détails, l'histoire et les monuments de chaque nation de l'al
 ---
 
 _Pour ajouter votre nation ou modifier une description, contactez l'administrateur._
+
