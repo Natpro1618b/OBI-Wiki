@@ -78,4 +78,9 @@ ___
 
 > **Article 5-02** : Un OBISEC ne peut être validé si seulement il est touristique.
 
-> 
+> **Article 5-03** : Un bâtiment peut devenir un OBISEC si seulement:
+-Possède une signification en rapport avec le pays.
+-
+-
+
+> **Article 5-04** : 
