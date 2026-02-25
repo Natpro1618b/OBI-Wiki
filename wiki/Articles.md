@@ -65,4 +65,17 @@ Bienvenue dans le cahier des Articles officiel. Utilisez la barre de recherche c
 
 > **Article 4-01** : Le système de guerre "Contrôle de l'Europe" est mis en place en cas de guerre ; le déroulement est écrit dans un livre officiel.
 
+
 > **Article 4-02** : *(Emplacement réservé pour futur article)*
+
+
+___
+
+
+### 🌍 Section 5 : Organisation des Nations Unies pour l'Education, la Science et la Culture
+
+> **Article 5-01** : Un Bâtiment OBISEC ne peut pas être ciblé dans un conflit de guerre.
+
+> **Article 5-02** : Un OBISEC ne peut être validé si seulement il est touristique.
+
+> 
