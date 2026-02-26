@@ -79,8 +79,30 @@ ___
 > **Article 5-02** : Un OBISEC ne peut être validé si seulement il est touristique.
 
 > **Article 5-03** : Un bâtiment peut devenir un OBISEC si seulement:
--Possède une signification en rapport avec le pays.
--
--
+ - Possède une signification en rapport avec le pays.
+ - Représente un symbole national ou international.
+ - Contribue à la transmission du savoir
 
-> **Article 5-04** : 
+> **Article 5-04** : Un site OBISEC doit être protégé, entretenu et conservé par le pays dans lequel il se situe.
+
+> **Article 5-05** : Toute destruction intentionnelle d’un bâtiment OBISEC est considérée comme une violation grave des règles internationales.
+
+> **Article 5-06** : Une commission internationale indépendante doit examiner chaque demande de classement OBISEC.
+
+> **Article 5-07** : Le statut OBISEC peut être retiré si :
+ - Le bâtiment est gravement modifié sans autorisation.
+ - Il perd sa valeur culturelle ou historique.
+ - Il est utilisé à des fins militaires.
+
+> **Article 5-08** : Un OBISEC ne peut pas être utilisé à des fins de propagande politique ou militaire
+
+> **Article 5-09** : Dans la mesure du possible, un site OBISEC doit rester accessible au public
+
+> **Article 5-10** : Les États membres s’engagent à coopérer afin d’assurer la protection, la conservation et la valorisation des biens classés OBISEC.
+En cas de menace grave, une assistance technique peut être accordée par la communauté internationale.
+
+> **Article 5-11** : L’OBISEC tient un registre international public des biens classés, régulièrement mis à jour.
+
+> **Article 5-12** : Toute décision de classement, de suspension ou de retrait doit être motivée et rendue publique
+
+> **Article 5-13** : *Futur Article*
