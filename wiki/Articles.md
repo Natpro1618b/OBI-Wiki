@@ -90,9 +90,9 @@ ___
 > **Article 5-06** : Une commission internationale indépendante doit examiner chaque demande de classement OBISEC.
 
 > **Article 5-07** : Le statut OBISEC peut être retiré si :
- - Le bâtiment est gravement modifié sans autorisation.
- - Il perd sa valeur culturelle ou historique.
- - Il est utilisé à des fins militaires.
+> - Le bâtiment est gravement modifié sans autorisation.
+> - Il perd sa valeur culturelle ou historique.
+> - Il est utilisé à des fins militaires.
 
 > **Article 5-08** : Un OBISEC ne peut pas être utilisé à des fins de propagande politique ou militaire
 
@@ -106,3 +106,4 @@ En cas de menace grave, une assistance technique peut être accordée par la com
 > **Article 5-12** : Toute décision de classement, de suspension ou de retrait doit être motivée et rendue publique
 
 > **Article 5-13** : *Futur Article*
+
