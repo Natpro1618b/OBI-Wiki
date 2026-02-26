@@ -79,9 +79,9 @@ ___
 > **Article 5-02** : Un OBISEC ne peut être validé si seulement il est touristique.
 
 > **Article 5-03** : Un bâtiment peut devenir un OBISEC si seulement:
- - Possède une signification en rapport avec le pays.
- - Représente un symbole national ou international.
- - Contribue à la transmission du savoir
+> - Possède une signification en rapport avec le pays.
+> - Représente un symbole national ou international.
+> - Contribue à la transmission du savoir
 
 > **Article 5-04** : Un site OBISEC doit être protégé, entretenu et conservé par le pays dans lequel il se situe.
 
@@ -106,4 +106,5 @@ En cas de menace grave, une assistance technique peut être accordée par la com
 > **Article 5-12** : Toute décision de classement, de suspension ou de retrait doit être motivée et rendue publique
 
 > **Article 5-13** : *Futur Article*
+
 
